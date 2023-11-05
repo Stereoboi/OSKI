@@ -30,8 +30,8 @@ passport.deserializeUser((user: any, done) => {
 });
 
 const app = express();
-app.use(helmet());
 app.set('trust proxy', 1);
+app.use(helmet());
 console.log('COOOOOOOOOOOOOOOOOOOOOOOOOOOkie', process.env.COOKIE_KEY!);
 
 app.use(
@@ -60,7 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(
   cors({
-    origin: true,
+    origin: ['http://localhost:3000', 'http://localhost:8000'],
     credentials: true,
   }),
 );
