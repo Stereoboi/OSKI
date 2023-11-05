@@ -17,14 +17,14 @@ import ErrorHandler from '../middleware/error-handler.js';
 passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
 passport.serializeUser((user: any, done) => {
-  console.log('serializeUser');
+  console.log('serializeUser', user);
 
   done(null, { id: user.id, email: user.emails[0].value });
 });
 
 passport.deserializeUser((user: any, done) => {
+  console.log('deserializeUser', user);
   isUserExist(user);
-  console.log('deserializeUser');
 
   done(null, user);
 });

@@ -13,6 +13,6 @@ export const AUTH_OPTIONS = {
 };
 
 export function verifyCallback(accessToken: any, refreshToken: any, profile: any, done: any) {
-  console.log('Google profile verify cb');
+  console.log('Google profile verify cb', profile);
   done(null, profile);
 }
