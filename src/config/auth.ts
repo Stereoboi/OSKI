@@ -9,7 +9,7 @@ export const config = {
 export const AUTH_OPTIONS = {
   clientID: config.CLIENT_ID!,
   clientSecret: config.CLIENT_SECRET!,
-  callbackURL: '/auth/google/callback',
+  callbackURL: `${process.env.DEPLOY_URL}/auth/google/callback`,
 };
 
 export function verifyCallback(accessToken: any, refreshToken: any, profile: any, done: any) {
