@@ -13,7 +13,12 @@ const completedBySchema = new Schema({
   user: String,
   mark: String,
   answers: [String],
-  status: String,
+
+  status: {
+    type: String,
+    enum: ['not passed', 'in progress', 'completed'],
+    default: 'not passed',
+  },
 });
 
 const testSchema = new Schema({

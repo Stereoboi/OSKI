@@ -56,40 +56,17 @@ app.use((req, res, next) => {
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+);
 app.use(morgan('combined'));
 
 app.use(express.json());
 
 app.use('/', api);
-
-// app.get(
-//   '/auth/google',
-//   passport.authenticate('google', {
-//     scope: ['email'],
-//   }),
-// );
-
-// app.get(
-//   '/auth/google/callback',
-//   passport.authenticate('google', {
-//     failureRedirect: '/failure',
-//     successRedirect: '/secret',
-//     session: true,
-//   }),
-//   (req: Request, res: Response) => {
-//     console.log('Google called us back!');
-//   },
-// );
-
-// app.get('/logout', async (req, res, next) => {
-//   await req.logout(function (err) {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.redirect('/');
-//   });
-// });
 
 app.get('/secret', checkLoggedIn, (req, res) => {
   return res.send('Your personal secret value is 42!');

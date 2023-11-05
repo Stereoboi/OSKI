@@ -13,7 +13,7 @@ export class SigInControllers {
   async handleGoogleCallback(req: Request, res: Response, next: NextFunction) {
     passport.authenticate('google', {
       failureRedirect: '/failure',
-      successRedirect: '/secret',
+      successRedirect: 'http://localhost:3000/testlab',
       session: true,
     })(req, res, next);
   }
@@ -23,7 +23,7 @@ export class SigInControllers {
       if (err) {
         return next(err);
       }
-      res.redirect('/');
+      res.redirect('http://localhost:3000');
     });
   }
 }

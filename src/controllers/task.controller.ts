@@ -28,7 +28,6 @@ export class TaskController {
       const result = await this.testService.submitTest(values, email);
       return res.status(200).json({ result });
     } else {
-      console.error('User not found');
       return res.status(401).json({ error: 'User not found' });
     }
   }

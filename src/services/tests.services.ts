@@ -3,7 +3,6 @@ import Test from '../schemes/test.schema.js';
 import AnswersModel from '../schemes/answers.schema.js';
 import { CustomError } from '../helpers/custom.error.js';
 import { TestAnswers } from '../types/test-types.js';
-
 export class TestServices {
   async getAllTests(email?: string) {
     // const dbReqResult = await Test.find({ plan: 'starter' });
@@ -53,21 +52,22 @@ export class TestServices {
   }
 
   async submitTest(values: TestAnswers, email?: string) {
-    console.log(values);
-
     const { testId, answers } = values;
 
     // шукаємо в БД відповіді на тест для перевірки результату
     const dbAnswers = await AnswersModel.findOne({ testId: testId });
+    console.log(dbAnswers?.answers);
 
     //редюсом проходимось по масивах і підраховуємо правильні результати
-    const calculateTestResults = answers.reduce((correctCount: number, answer: string, index: number) => {
-      const userAnswer = answer.toLowerCase();
-      const correctAnswer = dbAnswers?.answers[index].toLowerCase();
+    // const  = answers.reduce((correctCount: number, answer: string, index: number) => {
+    //   const userAnswer = answer.toLowerCase();
+    //   const correctAnswer = dbAnswers?.answers[index].toLowerCase();
 
-      return userAnswer === correctAnswer ? correctCount + 1 : correctCount;
-    }, 0);
+    //   return userAnswer === correctAnswer ? correctCount + 1 : correctCount;
+    // }, 0);
 
+    const calculateTestResults = dbAnswers?.answers.filter((item) => answers.includes(item));
+    const count = calculateTestResults?.length;
     // знаходжу тест за testId
     const test = await Test.findOne({ testId: testId });
 
@@ -79,15 +79,15 @@ export class TestServices {
     const userCompletedTest = test.completed_by.find((user) => user.user === email);
 
     if (!userCompletedTest) {
-      //записуємо в об'єкт Тестс користувача який пройшшов тест,
-      //його результат та дані для подальшого унеможливлювання повторного проходження тесту
+      // записуємо в об'єкт Тестс користувача який пройшшов тест,
+      // його результат та дані для подальшого унеможливлювання повторного проходження тесту
       await Test.findOneAndUpdate(
         { testId: testId },
         {
           $push: {
             completed_by: {
               user: email,
-              mark: `${calculateTestResults} out of ${answers.length}`,
+              mark: `${count} out of ${answers.length}`,
               answers: answers,
               status: 'completed',
             },
@@ -99,7 +99,7 @@ export class TestServices {
       throw new CustomError('You have already completed this test', 302);
     }
 
-    const response = `correct answers ${calculateTestResults} from ${answers.length}`;
+    const response = `correct answers ${count} from ${answers.length}`;
 
     return response;
   }
