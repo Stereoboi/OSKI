@@ -56,7 +56,6 @@ export class TestServices {
 
     // шукаємо в БД відповіді на тест для перевірки результату
     const dbAnswers = await AnswersModel.findOne({ testId: testId });
-    console.log(dbAnswers?.answers);
 
     // проходимось по масивах і підраховуємо правильні результати
 

@@ -5,12 +5,16 @@ export class SigInControllers {
   // constructor(){}
 
   async authenticateWithGoogle(req: Request, res: Response, next: NextFunction) {
+    console.log('google auth works');
+
     passport.authenticate('google', {
       scope: ['email'],
     })(req, res, next);
   }
 
   async handleGoogleCallback(req: Request, res: Response, next: NextFunction) {
+    console.log('verify cb works');
+
     passport.authenticate('google', {
       failureRedirect: '/failure',
       successRedirect: 'http://localhost:3000/testlab',
