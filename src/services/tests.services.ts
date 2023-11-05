@@ -58,13 +58,7 @@ export class TestServices {
     const dbAnswers = await AnswersModel.findOne({ testId: testId });
     console.log(dbAnswers?.answers);
 
-    //редюсом проходимось по масивах і підраховуємо правильні результати
-    // const  = answers.reduce((correctCount: number, answer: string, index: number) => {
-    //   const userAnswer = answer.toLowerCase();
-    //   const correctAnswer = dbAnswers?.answers[index].toLowerCase();
-
-    //   return userAnswer === correctAnswer ? correctCount + 1 : correctCount;
-    // }, 0);
+    // проходимось по масивах і підраховуємо правильні результати
 
     const calculateTestResults = dbAnswers?.answers.filter((item) => answers.includes(item));
     const count = calculateTestResults?.length;

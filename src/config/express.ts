@@ -68,7 +68,7 @@ app.use(express.json());
 
 app.use('/', api);
 
-app.get('/secret', checkLoggedIn, (req, res) => {
+app.get('/secret', (req, res) => {
   return res.send('Your personal secret value is 42!');
 });
 
