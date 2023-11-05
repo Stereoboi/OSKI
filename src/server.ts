@@ -1,4 +1,4 @@
-import http from 'http';
+import https from 'https';
 
 import app from './config/express.js';
 
@@ -6,7 +6,7 @@ import { mongoConnect } from './config/mongo.js';
 
 const PORT = process.env.PORT || 8000;
 
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 async function startServer() {
   await mongoConnect();
