@@ -31,6 +31,8 @@ passport.deserializeUser((user: any, done) => {
 
 const app = express();
 app.use(helmet());
+app.set('trust proxy', 1);
+console.log('COOOOOOOOOOOOOOOOOOOOOOOOOOOkie', process.env.COOKIE_KEY!);
 
 app.use(
   cookieSession({
